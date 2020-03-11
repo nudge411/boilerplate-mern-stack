@@ -47,6 +47,16 @@ router.post('/uploadfiles', (req, res) => {
   })
 })
 
+router.get('/getVideos', (req, res) => {
+  // 비디오를 DB에서 가져와서 클라이언트에 보낸다
+  Video.find()
+  .populate('writer')
+  .exec((err, videos) => {
+    if(err) return res.status(400).send(err);
+    res.status(200).json({ success: true, videos })
+  })
+})
+
 router.post('/thumbnail', (req, res) => {
   // 썸네일 생성, 비디오의 러닝타임 가져온후 서버에 저장하면 된다
   let filePath = ''
